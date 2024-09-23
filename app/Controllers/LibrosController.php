@@ -12,11 +12,11 @@ class LibrosController{
     }
 
     public function index(){
-        $this->view->index($this->model->getAllRecords(), $this->isGestion());
+        $this->view->index($this->model->all(), $this->isGestion());
     }
 
     public function show($id){
-        $this->view->show($this->model->getRecord($id), $this->isGestion());
+        $this->view->show($this->model->find($id), $this->isGestion());
     }
 
     public function create(){
