@@ -19,10 +19,6 @@ class DBConnectionModel{
         return $pdo;
     }
 
-    public function closeConnection(){
-        $this->db = null;
-    }
-
     public function getConnection(){
         return $this->db;
     }

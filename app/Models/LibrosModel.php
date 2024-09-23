@@ -9,7 +9,6 @@ class LibrosModel extends DBConnectionModel{
             $query = $connection->prepare("SELECT libros.*, autores.id AS autor_id, autores.nombre AS autor_nombre , idiomas.id AS idioma_id, idiomas.nombre AS idioma_nombre FROM libros JOIN autores ON libros.autor = autores.id JOIN idiomas ON libros.idioma = idiomas.id");
             $query->execute();
             $connection->commit();
-            $this->closeConnection();
             $libros = $query->fetchAll(PDO::FETCH_OBJ);
             foreach($libros as $libro){
             $libro = $this->mapLibro($libro);
@@ -28,7 +27,6 @@ class LibrosModel extends DBConnectionModel{
             $query = $connection->prepare("SELECT libros.*, autores.id AS autor_id, autores.nombre AS autor_nombre , idiomas.id AS idioma_id, idiomas.nombre AS idioma_nombre FROM libros JOIN autores ON libros.autor = autores.id JOIN idiomas ON libros.idioma = idiomas.id WHERE libros.isbn = ?");
             $query->execute([$isbn]);
             $connection->commit();
-            $this->closeConnection();
             $libro = $query->fetch(PDO::FETCH_OBJ);
 
             return $this->mapLibro($libro);
@@ -88,6 +86,14 @@ class LibrosModel extends DBConnectionModel{
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
+        }
+    }
+
+    public function save($libro){
+        if(isset($libro->isbn)){
+            $this->update($libro);
+        }else{
+            $this->create($libro);
         }
     }
 

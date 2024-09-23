@@ -2,14 +2,13 @@
 require_once "app/DBConnectionModel.php";
 class AutoresModel extends DBConnectionModel{
 
-    public function getAllRecords(){
+    public function all(){
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
             $query = $connection->prepare("SELECT * FROM autores");
             $query->execute();
             $connection->commit();
-            $this->closeConnection();
             $autores = $query->fetchAll(PDO::FETCH_OBJ);
             return $autores;
         }catch(Exception $e){
@@ -18,36 +17,69 @@ class AutoresModel extends DBConnectionModel{
         }
     }
 
-    public function getRecord($id){
+    public function find($id){
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("SELECT libros.*, autores.id AS autor_id, autores.nombre AS autor_nombre FROM libros JOIN autores ON libros.autor = autores.id WHERE libros.isbn = ?");
+            $query = $connection->prepare("SELECT * FROM libroe WHERE id = ?");
             $query->execute([$id]);
             $connection->commit();
-            $this->closeConnection();
-            $libro = $query->fetch(PDO::FETCH_OBJ);
-            $autor = new stdClass();
-            $autor->id = $libro->autor_id;
-            $autor->nombre = $libro->autor_nombre;
-            unset($libro->autor_id, $libro->autor_nombre, $libro->autor);
-            $libro->autor = $autor;
-            return $libro;
+            $autor = $query->fetch(PDO::FETCH_OBJ);
+            return $autor;
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
         }
     }
-    public function generic(){
+
+    public function create($autor){
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-
+            $query = $connection->prepare("INSERT INTO libros(nombre, biografia) VALUES(?, ?)");
+            $query->execute([$autor->nombre, $autor->biografia]);
             $connection->commit();
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
         }
     }
+
+
+    public function update($autor){
+        try{
+            $connection = $this->getConnection();
+            $connection->beginTransaction();
+            $query = $connection->prepare("UPDATE autores SET nombre=?, biografia=? WHERE id = ?");
+            $query->execute([$autor->nombre, $autor->biografia, $autor->id]);
+            $connection->commit();
+        }catch(Exception $e){
+            $connection ->rollBack();
+            error_log($e ->getMessage());
+        }
+    }
+
+    public function save($autor){
+        if(isset($autor->id)){
+            $this->update($autor);
+        }else{
+            $this->create($autor);
+        }
+    }
+
+    public function delete($id){
+        try{
+            $connection = $this->getConnection();
+            $connection->beginTransaction();
+            $query = $connection->prepare("DELETE FROM autores WHERE id = ?");
+            $query->execute([$id]);
+            $connection->commit();
+        }catch(Exception $e){
+            $connection ->rollBack();
+            error_log($e ->getMessage());
+        }
+    }
+
+
 }
 ?>
