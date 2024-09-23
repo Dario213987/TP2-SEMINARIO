@@ -1,13 +1,19 @@
 <?php   
 require_once "app/Models/LibrosModel.php";
+require_once "app/Models/IdiomasModel.php";
+require_once "app/Models/AutoresModel.php";
 require_once "app/Views/LibrosView.php";
 
 class LibrosController{
     private $model;
+    private $idiomasModel;
+    private $autoresModel;
     private $view;
 
     function __construct(){
         $this->model = new LibrosModel();
+        $this->idiomasModel = new idiomasModel();
+        $this->autoresModel = new AutoresModel();
         $this->view = new LibrosView();
     }
 
@@ -20,7 +26,7 @@ class LibrosController{
     }
 
     public function create(){
-
+        $this->view->create($this->autoresModel->all(), $this->idiomasModel->all());
     }
 
     public function store(){

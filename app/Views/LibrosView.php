@@ -21,5 +21,11 @@ class LibrosView{
         $this->smarty->assign("gestion", $gestion);
         $this->smarty->display("libros/libro.tpl");
     }
+
+    function create($autores, $idiomas){
+        $this->smarty->assign("autores", $autores);
+        $this->smarty->assign("idiomas", $idiomas);
+        $this->smarty->display("libros/formLibroCrear.tpl");
+    }
 }
 ?>

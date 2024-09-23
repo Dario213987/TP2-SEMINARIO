@@ -1,16 +1,16 @@
 <?php
 require_once "app/DBConnectionModel.php";
-class AutoresModel extends DBConnectionModel{
+class idiomasModel extends DBConnectionModel{
 
     public function all(){
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("SELECT * FROM autores");
+            $query = $connection->prepare("SELECT * FROM idiomas");
             $query->execute();
             $connection->commit();
-            $autores = $query->fetchAll(PDO::FETCH_OBJ);
-            return $autores;
+            $idiomas = $query->fetchAll(PDO::FETCH_OBJ);
+            return $idiomas;
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
@@ -21,23 +21,23 @@ class AutoresModel extends DBConnectionModel{
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("SELECT * FROM autores WHERE id = ?");
+            $query = $connection->prepare("SELECT * FROM idioma WHERE id = ?");
             $query->execute([$id]);
             $connection->commit();
-            $autor = $query->fetch(PDO::FETCH_OBJ);
-            return $autor;
+            $idioma = $query->fetch(PDO::FETCH_OBJ);
+            return $idioma;
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
         }
     }
 
-    public function create($autor){
+    public function create($idioma){
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("INSERT INTO autores(nombre, biografia) VALUES(?, ?)");
-            $query->execute([$autor->nombre, $autor->biografia]);
+            $query = $connection->prepare("INSERT INTO idioma(nombre) VALUES(?)");
+            $query->execute([$idioma->nombre]);
             $connection->commit();
         }catch(Exception $e){
             $connection ->rollBack();
@@ -46,12 +46,12 @@ class AutoresModel extends DBConnectionModel{
     }
 
 
-    public function update($autor){
+    public function update($idioma){
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("UPDATE autores SET nombre=?, biografia=? WHERE id = ?");
-            $query->execute([$autor->nombre, $autor->biografia, $autor->id]);
+            $query = $connection->prepare("UPDATE idiomas SET nombre=? WHERE id = ?");
+            $query->execute([$idioma->nombre, $idioma->id]);
             $connection->commit();
         }catch(Exception $e){
             $connection ->rollBack();
@@ -59,11 +59,11 @@ class AutoresModel extends DBConnectionModel{
         }
     }
 
-    public function save($autor){
-        if(isset($autor->id)){
-            $this->update($autor);
+    public function save($idioma){
+        if(isset($idioma->id)){
+            $this->update($idioma);
         }else{
-            $this->create($autor);
+            $this->create($idioma);
         }
     }
 
@@ -71,7 +71,7 @@ class AutoresModel extends DBConnectionModel{
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("DELETE FROM autores WHERE id = ?");
+            $query = $connection->prepare("DELETE FROM idiomas WHERE id = ?");
             $query->execute([$id]);
             $connection->commit();
         }catch(Exception $e){
