@@ -28,7 +28,6 @@ class LibrosModel extends DBConnectionModel{
             $query->execute([$isbn]);
             $connection->commit();
             $libro = $query->fetch(PDO::FETCH_OBJ);
-
             return $this->mapLibro($libro);
         }catch(Exception $e){
             $connection ->rollBack();
@@ -53,7 +52,7 @@ class LibrosModel extends DBConnectionModel{
                 $libro->peso,
                 $libro->encuadernado,
                 $libro->sinopsis,
-                $libro->autor->id,
+                $libro->autor->id
             ]);
             $connection->commit();
         }catch(Exception $e){

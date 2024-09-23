@@ -19,10 +19,15 @@
                         switch($parameters[1]){
                             case "libros":
                                 if(!empty($parameters[2])){
-                                    if($parameters[2] == "crear"){
-                                        $librosController->create();
-                                    }else{
-                                        $librosController->show($parameters[2]);
+                                    switch($parameters[2]){
+                                        case "crear":
+                                            $librosController->create();
+                                            break;
+                                        case "guardar":
+                                            $librosController->store();
+                                            break;
+                                        default:
+                                            $librosController->show($parameters[2]);
                                     }
                                 }else{
                                     $librosController->index();

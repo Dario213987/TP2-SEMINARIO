@@ -27,7 +27,7 @@
     </div>
     <div>
         <label for="idioma">Idioma:</label>
-        <select name="autor" required>
+        <select name="idioma" required>
             {foreach from=$idiomas item=idioma}
                 <option value='{$idioma->id}'>{$idioma->nombre}</option>
             {/foreach}
@@ -60,6 +60,9 @@
     <div>
         <label for="sinopsis">Sinopsis:</label>
         <textarea name="sinopsis" maxlength="2000" placeholder="Introduzca la sinopsis de la obra..."></textarea>
+    </div>
+    <div>
+        <button type="submit">Guardar</button>
     </div>
 </form>
 {include file="components/footer.tpl"}

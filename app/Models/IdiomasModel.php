@@ -21,7 +21,7 @@ class idiomasModel extends DBConnectionModel{
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("SELECT * FROM idioma WHERE id = ?");
+            $query = $connection->prepare("SELECT * FROM idiomas WHERE id = ?");
             $query->execute([$id]);
             $connection->commit();
             $idioma = $query->fetch(PDO::FETCH_OBJ);
@@ -36,7 +36,7 @@ class idiomasModel extends DBConnectionModel{
         try{
             $connection = $this->getConnection();
             $connection->beginTransaction();
-            $query = $connection->prepare("INSERT INTO idioma(nombre) VALUES(?)");
+            $query = $connection->prepare("INSERT INTO idiomas(nombre) VALUES(?)");
             $query->execute([$idioma->nombre]);
             $connection->commit();
         }catch(Exception $e){
