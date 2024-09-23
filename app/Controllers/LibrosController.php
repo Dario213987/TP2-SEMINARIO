@@ -40,7 +40,7 @@ class LibrosController{
     }
 
     private function isGestion(){
-        return explode("/", $_SERVER['REQUEST_URI'])[0] !== "gestion";
+        return explode("/", $_SERVER['REQUEST_URI'])[1] === "gestion";
     }
 }
 ?>

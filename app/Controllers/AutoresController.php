@@ -12,7 +12,7 @@ class AutoresController{
     }
 
     public function index(){
-        $this->view->index($this->model->getAllRecords(), $this->isGestion());
+        $this->view->index($this->model->all(), $this->isGestion());
     }
 
     public function show($id){

@@ -7,6 +7,7 @@ class AutoresView{
         $this->smarty = new Smarty;
         $this->smarty->registerPlugin('modifier', 'file_exists', 'file_exists');
         $this->smarty->assign('document_root', $_SERVER['DOCUMENT_ROOT']);
+        //$this->smarty->debugging = true;
     }
 
     function index($autores, $gestion){
