@@ -1,6 +1,6 @@
 {assign var="titulo" value="Nuevo libro"}
 {include file="components/header.tpl"}
-<form id="form-crear-libro">
+<form id="form-crear-libro" method="post" enctype="multipart/form-data" action="/gestion/libros/guardar">
     <div>
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" maxlength="128" required placeholder="Título del libro">

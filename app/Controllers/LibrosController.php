@@ -30,7 +30,7 @@ class LibrosController{
     }
 
     public function store(){
-
+        
     }
 
     public function edit(){
