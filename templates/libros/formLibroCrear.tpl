@@ -4,6 +4,7 @@
     <div>
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" maxlength="128" required placeholder="Título del libro">
+            <h1>{print_r($errors)}</h1>
     </div>
     <div>
         <label for="autor">Autor:</label>

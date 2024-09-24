@@ -3,6 +3,7 @@ require_once "app/Models/LibrosModel.php";
 require_once "app/Models/IdiomasModel.php";
 require_once "app/Models/AutoresModel.php";
 require_once "app/Views/LibrosView.php";
+require_once "app/Requests/CreateLibroRequest.php";
 
 class LibrosController{
     private $model;
@@ -30,21 +31,39 @@ class LibrosController{
     }
 
     public function store(){
-        $libro = new stdClass();
-        $libro->titulo = $_POST["titulo"];
-        $libro->autor = $this->autoresModel->find($_POST["autor"]);
-        $libro->fecha_de_publicacion = $_POST["fecha_de_publicacion"];
-        $libro->editorial = $_POST["editorial"];
-        $libro->isbn = $_POST["isbn"];
-        $libro->idioma = $this->idiomasModel->find($_POST["idioma"]);
-        $libro->alto = $_POST["alto"];
-        $libro->ancho = $_POST["ancho"];
-        $libro->grosor = $_POST["grosor"];
-        $libro->peso = $_POST["peso"];
-        $libro->encuadernado = $_POST["encuadernado"];
-        $libro->sinopsis = $_POST["sinopsis"];
-        move_uploaded_file($_FILES['portada']['tmp_name'], "/var/www/html/img/libros/".$libro->isbn.".png");
-        $this->model->create($libro);
+        $requestHandler = new CreateLibroRequest([
+            'titulo',                
+            'autor',                 
+            'fecha_de_publicacion',   
+            'editorial',             
+            'isbn',                  
+            'idioma',                
+            'alto',                  
+            'ancho',                
+            'grosor',                
+            'peso',                  
+            'encuadernado',         
+            'sinopsis'               
+        ]);
+        if(!$requestHandler->hasErrors()){
+            $libro = new stdClass();
+            $libro->titulo = $_POST["titulo"];
+            $libro->autor = $this->autoresModel->find($_POST["autor"]);
+            $libro->fecha_de_publicacion = $_POST["fecha_de_publicacion"];
+            $libro->editorial = $_POST["editorial"];
+            $libro->isbn = $_POST["isbn"];
+            $libro->idioma = $this->idiomasModel->find($_POST["idioma"]);
+            $libro->alto = $_POST["alto"];
+            $libro->ancho = $_POST["ancho"];
+            $libro->grosor = $_POST["grosor"];
+            $libro->peso = $_POST["peso"];
+            $libro->encuadernado = $_POST["encuadernado"];
+            $libro->sinopsis = $_POST["sinopsis"];
+            move_uploaded_file($_FILES['portada']['tmp_name'], "/var/www/html/img/libros/".$libro->isbn.".png");
+            $this->model->create($libro);
+        }else{
+            $this->view->create($this->autoresModel->all(), $this->idiomasModel->all(), $requestHandler->getErrorMessages());
+        }
     }
 
     public function edit(){

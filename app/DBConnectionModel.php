@@ -11,8 +11,8 @@ class DBConnectionModel{
     public function createConnection(){
         try{
             $pdo = new PDO('mysql:host=db;port=3306;dbname=libreria;charset=utf8',
-            'user',
-            'user');
+            'root',
+            'root');
         }catch(Exception $e){
             var_dump($e);
         }

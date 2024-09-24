@@ -7,7 +7,7 @@ class LibrosView{
         $this->smarty = new Smarty;
         $this->smarty->registerPlugin('modifier', 'file_exists', 'file_exists');
         $this->smarty->assign('document_root', $_SERVER['DOCUMENT_ROOT']);
-        $this->smarty->debugging = true;
+        //$this->smarty->debugging = true;
     }
 
     function index($libros, $gestion){
@@ -22,9 +22,11 @@ class LibrosView{
         $this->smarty->display("libros/libro.tpl");
     }
 
-    function create($autores, $idiomas){
+    function create($autores, $idiomas, $errors = null){
         $this->smarty->assign("autores", $autores);
         $this->smarty->assign("idiomas", $idiomas);
+        $this->smarty->assign("errors", $errors);
+
         $this->smarty->display("libros/formLibroCrear.tpl");
     }
 }
