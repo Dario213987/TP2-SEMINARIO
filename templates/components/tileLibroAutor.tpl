@@ -1,8 +1,10 @@
+<a 
 {if $gestion}
-    <a href='/gestion/libros/{$libro->isbn}'>
+    href='/gestion/libros/{$libro->isbn}'
 {else}
-    <a href='/libros/{$libro->isbn}'>
+    href='/libros/{$libro->isbn}'
 {/if}
+class="tile-libro">
 {if $document_root|cat:'/img/libros/'|cat:$libro->isbn|cat:'.png'|file_exists} 
     <img src='/img/libros/{$libro->isbn}.png'>
 {else}

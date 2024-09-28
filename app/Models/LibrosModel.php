@@ -11,7 +11,7 @@ class LibrosModel extends DBConnectionModel{
             $connection->commit();
             $libros = $query->fetchAll(PDO::FETCH_OBJ);
             foreach($libros as $libro){
-            $libro = $this->mapLibro($libro);
+            $libro = LibroMapper::model2Libro($libro);
             }
             return $libros;
         }catch(Exception $e){
@@ -28,7 +28,7 @@ class LibrosModel extends DBConnectionModel{
             $query->execute([$isbn]);
             $connection->commit();
             $libro = $query->fetch(PDO::FETCH_OBJ);
-            return $this->mapLibro($libro);
+            return LibroMapper::model2Libro($libro);
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
@@ -107,18 +107,6 @@ class LibrosModel extends DBConnectionModel{
             $connection ->rollBack();
             error_log($e ->getMessage());
         }
-    }
-    private function mapLibro($libro){
-        $autor = new stdClass();
-        $autor->id = $libro->autor_id;
-        $autor->nombre = $libro->autor_nombre;
-        $libro->autor = $autor;
-        $idioma = new stdClass();
-        $idioma->id = $libro->idioma_id;
-        $idioma->nombre = $libro->idioma_nombre;
-        $libro->idioma = $idioma;
-        unset($libro->autor_id, $libro->autor_nombre, $libro->idioma_id, $libro->idioma_nombre);
-        return $libro;
     }
 }
 ?>

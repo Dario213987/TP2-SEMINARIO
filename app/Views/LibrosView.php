@@ -29,5 +29,14 @@ class LibrosView{
         $this->smarty->assign("oldValues", $oldValues);
         $this->smarty->display("libros/formLibroCrear.tpl");
     }
+
+    function edit($libro, $autores, $idiomas, $errors, $oldValues){
+        $this->smarty->assign("libro", $libro);
+        $this->smarty->assign("autores", $autores);
+        $this->smarty->assign("idiomas", $idiomas);
+        $this->smarty->assign("errors", $errors);
+        $this->smarty->assign("oldValues", $oldValues);
+        $this->smarty->display("libros/formLibroEditar.tpl");
+    }
 }
 ?>

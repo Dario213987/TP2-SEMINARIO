@@ -13,7 +13,11 @@
         switch($parameters[0]){
             case "inicio":
             case "libros":
-                  $librosController->index();
+                if(!empty($parameters[1])){
+                    $librosController->show($parameters[1]);
+                }else{
+                    $librosController->index();
+                }
                 break;
             case "gestion":
                     if(!empty($parameters[1])){

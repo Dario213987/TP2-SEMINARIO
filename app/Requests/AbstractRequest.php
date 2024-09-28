@@ -30,6 +30,7 @@ abstract class AbstractRequest{
     public function hasErrors(){
         return !empty($this->errorMessages);
     }
+
     public function all(){
         return $this->data;
     }

@@ -1,0 +1,68 @@
+:root{
+    --primary-color: yellow;
+    --secondary-color:lightgray;
+    --tertiary-color: #4e4e4e;
+    --font-color: white;
+    --small-icon: 1rem;
+    --medium-icon: 2rem;
+    --big-icon: 3rem;
+  }
+
+header {
+    display: flex;
+    background-color: var(--primary-color);
+    justify-content: center;
+    align-content: center;
+}
+
+header > img {
+    height: 3rem;
+    width: auto;
+}
+
+#login {
+    margin-left: auto;
+}
+
+nav>ul{
+    display: flex;
+    list-style: none;
+    background-color: var(--primary-color);
+    padding: 0;
+    margin: 0;
+}
+
+nav li{
+    padding: 0.5rem 1rem;
+}
+
+nav li:hover{
+    background-color: white;
+}
+
+.libros-feed{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile-libro{
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    background-color: var(--secondary-color);
+    width: 18%;
+}
+.tile-libro > img {
+    width: 100%;
+    height: auto;
+}
+
+footer {
+    display: flex;
+    background-color: var(--primary-color);
+    margin-top: auto;
+}

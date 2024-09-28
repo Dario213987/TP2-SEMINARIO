@@ -20,7 +20,7 @@ class CreateLibroRequest extends AbstractRequest{
             "peso" => [(new NumberValidator())->required()->min(1)->max(10000)],
             "encuadernado" => [(new StringValidator())->required()->allowedValues(["Tapa dura", "Tapa blanda"])],
             "sinopsis" => [(new StringValidator())->required()->maxLength(maxLength: 2000)],
-            "portada" => [(new ImageValidator())->required()->allowedExtensions([".png",".jpg",".webp",".jpeg"])->maxSize(2)->maxHeight(1426)->maxWidth(1000)->minHeight(100)->minWidth(100)]
+            "portada" => [(new ImageValidator())->allowedExtensions([".png",".jpg",".webp",".jpeg"])->maxSize(2)->maxHeight(1426)->maxWidth(1000)->minHeight(100)->minWidth(100)]
         ];
     }
     public function messages(){
