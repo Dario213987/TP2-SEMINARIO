@@ -3,7 +3,7 @@
 <form id="form-crear-libro" method="post" enctype="multipart/form-data" action="/gestion/libros/guardar">
     <div>
         <label for="titulo">Título:</label>
-        <input type="text" name="titulo" placeholder="Título del libro" value="{$oldValues["titulo"] ?? ''}">
+        <input type="text" name="titulo" placeholder="Título del libro" value="{$oldValues['titulo']|default:''}">
         {if $errors&&!empty($errors["titulo"])}
             <p class="error">*{$errors["titulo"]}</p>    
         {/if}
@@ -25,21 +25,21 @@
     </div>
     <div>
         <label for="fecha_de_publicacion">Fecha de publicación:</label>
-        <input type="date" name="fecha_de_publicacion" value="{$oldValues['fecha_de_publicacion'] ?? ''}">
+        <input type="date" name="fecha_de_publicacion" value="{$oldValues['fecha_de_publicacion']|default:''}">
         {if $errors&&!empty($errors["fecha_de_publicacion"])}
             <p class="error">*{$errors["fecha_de_publicacion"]}</p>    
         {/if}
     </div>
     <div>
         <label for="editorial">Editorial:</label>
-        <input type="text" name="editorial" placeholder="Editorial del libro" value="{$oldValues['editorial'] ?? ''}">
+        <input type="text" name="editorial" placeholder="Editorial del libro" value="{$oldValues['editorial']|default:''}">
         {if $errors&&!empty($errors["editorial"])}
             <p class="error">*{$errors["editorial"]}</p>    
         {/if}
     </div>
     <div>
         <label for="isbn">ISBN:</label>
-        <input type="number" name="isbn" placeholder="ISBN del libro" value="{$oldValues["isbn"] ?? ''}">
+        <input type="number" name="isbn" placeholder="ISBN del libro" value="{$oldValues["isbn"]|default:''}">
         {if $errors&&!empty($errors["isbn"])}
             <p class="error">*{$errors["isbn"]}</p>    
         {/if}
@@ -61,11 +61,11 @@
     </div>
     <div>
         <label for="">Dimensiones:</label>
-        <input type="number" name="alto" value="{$oldValues["alto"] ?? ''}">
+        <input type="number" name="alto" value="{$oldValues["alto"]|default:''}">
         x
-        <input type="number" name="ancho" value="{$oldValues["ancho"] ?? ''}">
+        <input type="number" name="ancho" value="{$oldValues["ancho"]|default:''}">
         x
-        <input type="number" name="grosor" value="{$oldValues["grosor"] ?? ''}">
+        <input type="number" name="grosor" value="{$oldValues["grosor"]|default:''}">
         mm
         {if $errors&&!empty($errors["alto"])}
             <p class="error">*{$errors["alto"]}</p>    
@@ -77,7 +77,7 @@
     </div>
     <div>
         <label for="peso">Peso:</label>
-        <input type="number" name="peso" placeholder="Peso del libro" value="{$oldValues["peso"] ?? ''}">g
+        <input type="number" name="peso" placeholder="Peso del libro" value="{$oldValues["peso"]|default:''}">g
         {if $errors&&!empty($errors["peso"])}
             <p class="error">*{$errors["peso"]}</p>    
         {/if}
@@ -102,7 +102,7 @@
     <div>
         <label for="sinopsis">Sinopsis:</label>
         <textarea name="sinopsis" placeholder="Introduzca la sinopsis de la obra...">
-            {$oldValues["sinopsis"] ?? ''}
+            {$oldValues["sinopsis"]|default:''}
         </textarea>
         {if $errors&&!empty($errors["sinopsis"])}
             <p class="error">*{$errors["sinopsis"]}</p>    

@@ -4,6 +4,7 @@ require_once "app/Models/IdiomasModel.php";
 require_once "app/Models/AutoresModel.php";
 require_once "app/Views/LibrosView.php";
 require_once "app/Requests/CreateLibroRequest.php";
+require_once "app/LibroMapper.php";
 
 class LibrosController{
     private $model;

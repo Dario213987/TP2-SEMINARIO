@@ -1,5 +1,6 @@
 <?php
 require_once "app/DBConnectionModel.php";
+require_once "app/LibroMapper.php";
 class LibrosModel extends DBConnectionModel{
 
     public function all(){

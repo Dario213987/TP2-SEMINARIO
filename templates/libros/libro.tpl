@@ -1,9 +1,9 @@
 {assign var="titulo" value="Inicio"}
 {include file="components/header.tpl"}
-{if $document_root|cat:'/img/libros/'|cat:$libro->isbn|cat:'.jpg'|file_exists} 
-     <img src='/img/libros/{$libro->isbn}.jpg'>
+{if $libro->ruta_de_imagen|file_exists}
+  <img src="{$libro->ruta_de_imagen}">
 {else}
-    <img src='/img/libros/not-found.png'>
+  <img src="/img/libros/not-found.png">
 {/if}
 <div>
     <h2>{$libro->titulo}</h2>
