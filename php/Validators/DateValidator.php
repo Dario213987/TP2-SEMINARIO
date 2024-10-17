@@ -5,7 +5,7 @@ class DateValidator extends AbstractValidator{
     public function validate($date){
         parent::validate($date);
 
-        if(!$this->getError() && $this->validDate($date)){
+        if(!$this->getError() && $this->dateFormat && $this->validDate($date)){
             $this->setError("date");
         }
     }

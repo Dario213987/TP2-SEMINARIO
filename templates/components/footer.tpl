@@ -1,21 +1,8 @@
 </main>
-<footer>
-    <h4>Librería carlitos</h4>
-    <div class="contacto">
-        <p>carlitoslibreria@gmail.com</p>
-        <p>+54152494918276</p>
-    </div>
-    <div class="redes">
-        <div class="red">
-            <p>Instagram</p>
-        </div>
-        <div class="red">
-            <p>Facebook</p>
-        </div>
-        <div class="red">
-            <p>Twitter</p>
-        </div>
-    </div>
+<footer class="bg-body-tertiary text-center d-flex flex-column bg-light">
+  <div class="text-center flex-grow-1 p-3">
+        contenido del footer
+  </div>
 </footer>
 </body>
 </html>

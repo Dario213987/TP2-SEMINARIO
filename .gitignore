@@ -4,3 +4,5 @@ docker-compose.yml
 database
 templates_c
 .vscode
+img/autores/*
+img/libros/*

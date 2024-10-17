@@ -8,56 +8,22 @@
     --big-icon: 3rem;
   }
 
-header {
-    display: flex;
-    background-color: var(--primary-color);
-    justify-content: center;
-    align-content: center;
-}
-
-header > img {
-    height: 3rem;
-    width: auto;
-}
-
-#login {
-    margin-left: auto;
-}
-
-nav>ul{
-    display: flex;
-    list-style: none;
-    background-color: var(--primary-color);
-    padding: 0;
-    margin: 0;
-}
-
-nav li{
-    padding: 0.5rem 1rem;
-}
-
-nav li:hover{
-    background-color: white;
-}
-
-.libros-feed{
+.libros-feed, .autores-feed{
     display: flex;
     flex-wrap: wrap;
 }
 
-.tile-libro{
+.tile-libro, .tile-autor{
     margin: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    text-decoration: none;
-    color: black;
-    background-color: var(--secondary-color);
-    width: 18%;
+    position: relative;
 }
-.tile-libro > img {
-    width: 100%;
+.tile-libro img {
+    object-fit: cover;
+    flex:1;
     height: auto;
 }
 
@@ -65,4 +31,35 @@ footer {
     display: flex;
     background-color: var(--primary-color);
     margin-top: auto;
+}
+.floating-buttons{
+    position:absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main{
+    flex:1;
+}
+.welcome-message{
+    display: none;
+}
+
+@media screen and (min-width: 576px) { 
+    .autores {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .welcome-message{
+        display: block;
+    }
+    .session-button{
+        margin-left: auto;
+    }
 }

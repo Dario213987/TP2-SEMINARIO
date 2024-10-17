@@ -6,7 +6,6 @@ class LibrosView{
     function __construct(){
         $this->smarty = new Smarty;
         $this->smarty->registerPlugin('modifier', 'file_exists', 'file_exists');
-        $this->smarty->assign('document_root', $_SERVER['DOCUMENT_ROOT']);
         //$this->smarty->debugging = true;
     }
 
@@ -22,20 +21,22 @@ class LibrosView{
         $this->smarty->display("libros/libro.tpl");
     }
 
-    function create($autores, $idiomas, $errors, $oldValues){
+    function create($autores, $idiomas, $errors, $oldValues, $gestion){
         $this->smarty->assign("autores", $autores);
         $this->smarty->assign("idiomas", $idiomas);
         $this->smarty->assign("errors", $errors);
         $this->smarty->assign("oldValues", $oldValues);
+        $this->smarty->assign("gestion", $gestion);
         $this->smarty->display("libros/formLibroCrear.tpl");
     }
 
-    function edit($libro, $autores, $idiomas, $errors, $oldValues){
+    function edit($libro, $autores, $idiomas, $errors, $oldValues, $gestion){
         $this->smarty->assign("libro", $libro);
         $this->smarty->assign("autores", $autores);
         $this->smarty->assign("idiomas", $idiomas);
         $this->smarty->assign("errors", $errors);
         $this->smarty->assign("oldValues", $oldValues);
+        $this->smarty->assign("gestion", $gestion);
         $this->smarty->display("libros/formLibroEditar.tpl");
     }
 }

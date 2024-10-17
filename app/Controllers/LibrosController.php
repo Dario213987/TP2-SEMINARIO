@@ -20,17 +20,19 @@ class LibrosController{
     }
 
     public function index(){
+        $this->limpiarErrores();
         $this->view->index($this->model->all(), $this->isGestion());
     }
 
     public function show($id){
+        $this->limpiarErrores();
         $this->view->show($this->model->find($id), $this->isGestion());
     }
 
     public function create(){
-        $errors = (!empty($_SESSION["errors"])) ? $_SESSION["errors"] : [];  
-        $oldValues = (!empty($_SESSION["old_values"])) ? $_SESSION["old_values"] : [];  
-        $this->view->create($this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues);
+        $errors = $_SESSION["errors"] ?? [];  
+        $oldValues = $_SESSION["old_values"] ?? [];  
+        $this->view->create($this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues, $this->isGestion());
     }
 
     public function store(){
@@ -50,20 +52,21 @@ class LibrosController{
             'sinopsis'               
         ], ["portada"]);
         if(!$requestHandler->hasErrors()){
-            $datosVerificados = $requestHandler->all();
-            $this->model->create(LibroMapper::form2Libro($datosVerificados));
-            move_uploaded_file($datosVerificados['portada']['tmp_name'], "/var/www/html/img/libros/".$datosVerificados['isbn'].pathinfo($datosVerificados['portada']['name'], PATHINFO_EXTENSION));
+            $libro = LibroMapper::request2Libro($requestHandler);
+            $this->model->create($libro);
+            header("Location: /gestion/libros");
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
             header("Location: /gestion/libros/crear");
         }
+
     }
 
     public function edit($id){
-        $errors = (!empty($_SESSION["errors"])) ? $_SESSION["errors"] : [];  
-        $oldValues = (!empty($_SESSION["old_values"])) ? $_SESSION["old_values"] : [];  
-        $this->view->edit($this->model->find($id) ,$this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues);
+        $errors = $_SESSION["errors"] ?? [];  
+        $oldValues = $_SESSION["old_values"] ?? [];  
+        $this->view->edit($this->model->find($id) ,$this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues, $this->isGestion());
     }
 
     public function update(){
@@ -80,18 +83,17 @@ class LibrosController{
             'grosor',                
             'peso',                  
             'encuadernado',         
-            'sinopsis'               
+            'sinopsis',
+            'old_isbn'               
         ], ["portada"]);
         if(!$requestHandler->hasErrors()){
-            $datosVerificados = $requestHandler->all();
-            $this->model->update(LibroMapper::form2Libro($datosVerificados));
-            if($datosVerificados['portada']['tmp_name']){
-                move_uploaded_file($datosVerificados['portada']['tmp_name'], "/var/www/html/img/libros/".$datosVerificados['isbn'].pathinfo($datosVerificados['portada']['name'], PATHINFO_EXTENSION));
-            }
+            $libro = LibroMapper::request2Libro($requestHandler);
+            $this->model->update($libro);
+            header("Location: /gestion/libros");
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
-            header("Location: /gestion/libros/crear");
+            header("Location: /gestion/libros/editar/".$_POST["old_isbn"]);
         }
     }
 
@@ -102,6 +104,11 @@ class LibrosController{
 
     private function isGestion(){
         return explode("/", $_SERVER['REQUEST_URI'])[1] === "gestion";
+    }
+
+    private function limpiarErrores(){
+        $_SESSION["old_values"] = [];
+        $_SESSION["errors"] = [];
     }
 }
 ?>

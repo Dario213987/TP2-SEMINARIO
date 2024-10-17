@@ -1,115 +1,124 @@
 {assign var="titulo" value="Nuevo libro"}
 {include file="components/header.tpl"}
-<form id="form-crear-libro" method="post" enctype="multipart/form-data" action="/gestion/libros/guardar">
-    <div>
-        <label for="titulo">Título:</label>
-        <input type="text" name="titulo" placeholder="Título del libro" value="{$oldValues['titulo']|default:''}">
-        {if $errors&&!empty($errors["titulo"])}
-            <p class="error">*{$errors["titulo"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="autor">Autor:</label>
-        <select name="autor" >
-            {foreach from=$autores item=autor}
-                <option value='{$autor->id}'
-                {if isset($oldValues["autor"])&&$autor->id==$oldValues["autor"]}
-                    selected
+<div class="col-12 col-md-10 col-lg-7 col-xl-6 my-5">
+    <div class="card shadow-lg rounded-4">
+        <h2 class="text-center pt-3">Nuevo libro</h2>
+        <form id="form-crear-libro" class="p-4" method="POST" enctype="multipart/form-data" action="/gestion/libros/guardar">
+            <div class="mb-3">
+                <label class="form-label" for="titulo">Título:</label>
+                <input type="text" class="form-control {if $errors&&!empty($errors["titulo"])}is-invalid{/if}" name="titulo" placeholder="Título del libro" value="{$oldValues['titulo']|default:''}">
+                {if $errors&&!empty($errors["titulo"])}
+                    <p class="invalid-feedback">*{$errors["titulo"]}</p>    
                 {/if}
-                >{$autor->nombre}</option>
-            {/foreach}
-        </select>
-        {if $errors&&!empty($errors["autor"])}
-            <p class="error">*{$errors["autor"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="fecha_de_publicacion">Fecha de publicación:</label>
-        <input type="date" name="fecha_de_publicacion" value="{$oldValues['fecha_de_publicacion']|default:''}">
-        {if $errors&&!empty($errors["fecha_de_publicacion"])}
-            <p class="error">*{$errors["fecha_de_publicacion"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="editorial">Editorial:</label>
-        <input type="text" name="editorial" placeholder="Editorial del libro" value="{$oldValues['editorial']|default:''}">
-        {if $errors&&!empty($errors["editorial"])}
-            <p class="error">*{$errors["editorial"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="isbn">ISBN:</label>
-        <input type="number" name="isbn" placeholder="ISBN del libro" value="{$oldValues["isbn"]|default:''}">
-        {if $errors&&!empty($errors["isbn"])}
-            <p class="error">*{$errors["isbn"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="idioma">Idioma:</label>
-        <select name="idioma" >
-            {foreach from=$idiomas item=idioma}
-                <option value='{$idioma->id}'
-                {if isset($oldValues["idioma"])&&$idioma->id==$oldValues["idioma"]}
-                    selected
+            </div>
+            <div class="mb-3">
+                <label class="form-label {if $errors&&!empty($errors["autor"])}is-invalid{/if}" for="autor">Autor:</label>
+                <select class="form-select" name="autor">
+                    <option selected value=''>Seleccione un autor</option>
+                    {foreach from=$autores item=autor}
+                        <option value='{$autor->id}'
+                        {if isset($oldValues["autor"])&&$autor->id==$oldValues["autor"]}
+                            selected
+                        {/if}
+                        >{$autor->nombre}</option>
+                    {/foreach}
+                </select>
+                {if $errors&&!empty($errors["autor"])}
+                    <p class="invalid-feedback">*{$errors["autor"]}</p>    
                 {/if}
-                >{$idioma->nombre}</option>
-            {/foreach}
-        </select>
-        {if $errors&&!empty($errors["idioma"])}
-            <p class="error">*{$errors["idioma"]}</p>    
-        {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="fecha_de_publicacion">Fecha de publicación:</label>
+                <input type="date" class="form-control {if $errors&&!empty($errors["fecha_de_publicacion"])}is-invalid{/if}" name="fecha_de_publicacion" value="{$oldValues['fecha_de_publicacion']|default:''}">
+                {if $errors&&!empty($errors["fecha_de_publicacion"])}
+                    <p class="invalid-feedback">*{$errors["fecha_de_publicacion"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="editorial">Editorial:</label>
+                <input type="text" class="form-control {if $errors&&!empty($errors["editorial"])}is-invalid{/if}" name="editorial" placeholder="Editorial del libro" value="{$oldValues['editorial']|default:''}">
+                {if $errors&&!empty($errors["editorial"])}
+                    <p class="invalid-feedback">*{$errors["editorial"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="isbn">ISBN:</label>
+                <input type="number" class="form-control {if $errors&&!empty($errors["isbn"])}is-invalid{/if}" name="isbn" placeholder="ISBN del libro" value="{$oldValues["isbn"]|default:''}">
+                {if $errors&&!empty($errors["isbn"])}
+                    <p class="invalid-feedback">*{$errors["isbn"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="idioma">Idioma:</label>
+                <select class="form-select {if $errors&&!empty($errors["idioma"])}is-invalid{/if}" name="idioma">
+                    <option selected value=''>Seleccione un idioma</option>
+                    {foreach from=$idiomas item=idioma}
+                        <option value='{$idioma->id}'
+                        {if isset($oldValues["idioma"])&&$idioma->id==$oldValues["idioma"]}
+                            selected
+                        {/if}
+                        >{$idioma->nombre}</option>
+                    {/foreach}
+                </select>
+                {if $errors&&!empty($errors["idioma"])}
+                    <p class="invalid-feedback">*{$errors["idioma"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3 row">
+                <label class="form-label" for="">Dimensiones:</label>
+                <div class="d-flex align-items-center">
+                    <input type="number" class="form-control mx-1 {if $errors&&!empty($errors["alto"])}is-invalid{/if}" name="alto" value="{$oldValues["alto"]|default:''}">
+                    x
+                    <input type="number" class="form-control mx-1 {if $errors&&!empty($errors["ancho"])}is-invalid{/if}" name="ancho" value="{$oldValues["ancho"]|default:''}">
+                    x
+                    <input type="number" class="form-control mx-1 {if $errors&&!empty($errors["grosor"])}is-invalid{/if}" name="grosor" value="{$oldValues["grosor"]|default:''}">
+                    mm
+                </div>
+                {if $errors&&!empty($errors["alto"])}
+                    <p class="invalid-feedback">*{$errors["alto"]}</p>    
+                {elseif $errors&&!empty($errors["ancho"])}
+                    <p class="invalid-feedback">*{$errors["ancho"]}</p>    
+                {elseif $errors&&!empty($errors["grosor"])}
+                    <p class="invalid-feedback">*{$errors["grosor"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="peso">Peso:</label>
+                <input type="number" class="form-control {if $errors&&!empty($errors["peso"])}is-invalid{/if}" name="peso" placeholder="Peso del libro" value="{$oldValues["peso"]|default:''}">g
+                {if $errors&&!empty($errors["peso"])}
+                    <p class="invalid-feedback">*{$errors["peso"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="encuadernado">Encuadernado:</label>
+                <select class="form-control {if $errors&&!empty($errors["encuadernado"])}is-invalid{/if}" name="encuadernado">
+                    <option selected value=''>Seleccione el encuadernado</option>
+                    <option value="Tapa dura">Tapa dura</option>
+                    <option value="Tapa blanda">Tapa blanda</option>
+                </select>
+                {if $errors&&!empty($errors["encuadernado"])}
+                    <p class="invalid-feedback">*{$errors["encuadernado"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="portada">Portada:</label>
+                <input type="file" class="form-control {if $errors&&!empty($errors["portada"])}is-invalid{/if}" name="portada" accept=".png, image/png, .jpg, image/jpg, .webp, image/webp">
+                {if $errors&&!empty($errors["portada"])}
+                    <p class="invalid-feedback">*{$errors["portada"]}</p>    
+                {/if}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="sinopsis">Sinopsis:</label>
+                <textarea class="form-control {if $errors&&!empty($errors["sinopsis"])}is-invalid{/if}" name="sinopsis" placeholder="Introduzca la sinopsis de la obra...">{$oldValues["sinopsis"]|default:''}</textarea>
+                {if $errors&&!empty($errors["sinopsis"])}
+                    <p class="invalid-feedback">*{$errors["sinopsis"]}</p>    
+                {/if}
+            </div>
+            <div class="d-flex justify-content-evenly">
+                <button class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary ms-5">Guardar</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="">Dimensiones:</label>
-        <input type="number" name="alto" value="{$oldValues["alto"]|default:''}">
-        x
-        <input type="number" name="ancho" value="{$oldValues["ancho"]|default:''}">
-        x
-        <input type="number" name="grosor" value="{$oldValues["grosor"]|default:''}">
-        mm
-        {if $errors&&!empty($errors["alto"])}
-            <p class="error">*{$errors["alto"]}</p>    
-        {elseif $errors&&!empty($errors["ancho"])}
-            <p class="error">*{$errors["ancho"]}</p>    
-        {elseif $errors&&!empty($errors["grosor"])}
-            <p class="error">*{$errors["grosor"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="peso">Peso:</label>
-        <input type="number" name="peso" placeholder="Peso del libro" value="{$oldValues["peso"]|default:''}">g
-        {if $errors&&!empty($errors["peso"])}
-            <p class="error">*{$errors["peso"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="encuadernado">Encuadernado:</label>
-        <select name="encuadernado" >
-            <option value="Tapa dura">Tapa dura</option>
-            <option value="Tapa blanda">Tapa blanda</option>
-        </select>
-        {if $errors&&!empty($errors["encuadernado"])}
-            <p class="error">*{$errors["encuadernado"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="portada">Portada:</label>
-        <input type="file" name="portada"  accept=".png, image/png, .jpg, image/jpg, .webp, image/webp">
-        {if $errors&&!empty($errors["portada"])}
-            <p class="error">*{$errors["portada"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <label for="sinopsis">Sinopsis:</label>
-        <textarea name="sinopsis" placeholder="Introduzca la sinopsis de la obra...">
-            {$oldValues["sinopsis"]|default:''}
-        </textarea>
-        {if $errors&&!empty($errors["sinopsis"])}
-            <p class="error">*{$errors["sinopsis"]}</p>    
-        {/if}
-    </div>
-    <div>
-        <button type="submit">Guardar</button>
-    </div>
-</form>
+</div>
 {include file="components/footer.tpl"}

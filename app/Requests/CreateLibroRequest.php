@@ -7,9 +7,9 @@ require_once "php/Validators/DateValidator.php";
 class CreateLibroRequest extends AbstractRequest{
     public function rules(){
         return [
-            "titulo" => [(new StringValidator())->required()->maxLength(12)],
+            "titulo" => [(new StringValidator())->required()->maxLength(128)],
             "autor" => [(new NumberValidator())->required()],
-            "fecha_de_publicacion" => [(new DateValidator())->required()->dateFormat("Y-m-d")],
+            "fecha_de_publicacion" => [(new DateValidator())->required()],
             "editorial" => [(new StringValidator())->maxLength(32)],
             "isbn" => [(new StringValidator())->required()->allowedLengths([10, 13]), 
                 (new NumberValidator())],
@@ -20,7 +20,7 @@ class CreateLibroRequest extends AbstractRequest{
             "peso" => [(new NumberValidator())->required()->min(1)->max(10000)],
             "encuadernado" => [(new StringValidator())->required()->allowedValues(["Tapa dura", "Tapa blanda"])],
             "sinopsis" => [(new StringValidator())->required()->maxLength(maxLength: 2000)],
-            "portada" => [(new ImageValidator())->allowedExtensions([".png",".jpg",".webp",".jpeg"])->maxSize(2)->maxHeight(1426)->maxWidth(1000)->minHeight(100)->minWidth(100)]
+            "portada" => [(new ImageValidator())->allowedExtensions(["png","jpg","webp","jpeg"])->maxSize(2)->maxHeight(1426)->maxWidth(1000)->minHeight(100)->minWidth(100)]
         ];
     }
     public function messages(){

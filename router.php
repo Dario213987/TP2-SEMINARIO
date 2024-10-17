@@ -31,11 +31,45 @@
                                         case "guardar":
                                             $librosController->store();
                                             break;
+                                        case "editar":
+                                            $librosController->edit($parameters[3]);
+                                            break;
+                                        case "modificar":
+                                            $librosController->update();
+                                            break;
+                                        case "eliminar":
+                                            $librosController->destroy($parameters[3]);
+                                            break;
                                         default:
                                             $librosController->show($parameters[2]);
                                     }
                                 }else{
                                     $librosController->index();
+                                }
+                                break;
+                            case "autores":
+                                if(!empty($parameters[2])){
+                                    switch($parameters[2]){
+                                        case "crear":
+                                            $autoresController->create();
+                                            break;
+                                        case "guardar":
+                                            $autoresController->store();
+                                            break;
+                                        case "editar":
+                                            $autoresController->edit($parameters[3]);
+                                            break;
+                                        case "modificar":
+                                            $autoresController->update();
+                                            break;
+                                        case "eliminar":
+                                            $autoresController->destroy($parameters[3]);
+                                            break;
+                                        default:
+                                            $autoresController->show($parameters[2]);
+                                    }
+                                }else{
+                                    $autoresController->index();
                                 }
                                 break;
                         }
