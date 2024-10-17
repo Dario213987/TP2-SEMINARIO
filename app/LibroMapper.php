@@ -1,4 +1,5 @@
 <?php
+require_once "config/config.php";
 class LibroMapper{
     public static function model2Libro($libro){
         $autor = new stdClass();
@@ -14,6 +15,7 @@ class LibroMapper{
     }
 
     public static function request2Libro($request){
+        global $configuracion;
         $values = $request->all();
         $libro = new stdClass();
         $libro->isbn = $values['isbn'];
@@ -39,7 +41,7 @@ class LibroMapper{
             $hash = hash("sha256", $archivoPortada);
             $extension = pathinfo($values['portada']['name'], PATHINFO_EXTENSION);
             //TODO: hacer que la ruta donde se guardan las imagenes sea una global configurable
-            $libro->ruta_de_imagen = "img/libros/" . $hash . "." . $extension;
+            $libro->ruta_de_imagen = $configuracion['libros_image_route'] . $hash . "." . $extension;
         } else {
             $libro->ruta_de_imagen = "";
         }

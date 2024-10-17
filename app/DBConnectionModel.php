@@ -1,4 +1,5 @@
 <?php
+require_once "config/config.php";
 class DBConnectionModel{
     
     private $db;
@@ -10,9 +11,10 @@ class DBConnectionModel{
 
     public function createConnection(){
         try{
-            $pdo = new PDO('mysql:host=db;port=3306;dbname=libreria;charset=utf8',
-            'root',
-            'root');
+            global $configuracion;
+            $pdo = new PDO('mysql:host='.$configuracion['host'].';port='.$configuracion['db_port'].';dbname='.$configuracion['database'].';charset=utf8',
+            $configuracion['user'],
+            $configuracion['password']);
         }catch(Exception $e){
             var_dump($e);
         }
