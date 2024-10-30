@@ -1,5 +1,5 @@
 <?php
-require_once "app/DBConnectionModel.php";
+require_once "app/Models/DBConnectionModel.php";
 class AutoresModel extends DBConnectionModel{
 
     public function all(){
@@ -8,8 +8,8 @@ class AutoresModel extends DBConnectionModel{
             $connection->beginTransaction();
             $query = $connection->prepare("SELECT * FROM autores");
             $query->execute();
-            $connection->commit();
             $autores = $query->fetchAll(PDO::FETCH_OBJ);
+            $connection->commit();
             return $autores;
         }catch(Exception $e){
             $connection ->rollBack();
@@ -23,8 +23,8 @@ class AutoresModel extends DBConnectionModel{
             $connection->beginTransaction();
             $query = $connection->prepare("SELECT * FROM libros WHERE autor = ?");
             $query->execute([$id]);
-            $connection->commit();
             $libros = $query->fetchAll(PDO::FETCH_OBJ);
+            $connection->commit();
             return $libros;
         }catch(Exception $e){
             $connection ->rollBack();
@@ -38,8 +38,8 @@ class AutoresModel extends DBConnectionModel{
             $connection->beginTransaction();
             $query = $connection->prepare("SELECT * FROM autores WHERE id = ?");
             $query->execute([$id]);
-            $connection->commit();
             $autor = $query->fetch(PDO::FETCH_OBJ);
+            $connection->commit();
             return $autor;
         }catch(Exception $e){
             $connection ->rollBack();
@@ -54,7 +54,7 @@ class AutoresModel extends DBConnectionModel{
             $query = $connection->prepare("INSERT INTO autores(nombre, biografia, ruta_de_imagen) VALUES(?, ?, ?)");
             $query->execute([$autor->nombre, $autor->biografia, $autor->ruta_de_imagen]);
             $connection->commit();
-            if (isset($autor->img) && is_uploaded_file($autor->img["tmp_name"])) {
+            if ($autor->ruta_de_imagen && is_uploaded_file($autor->img["tmp_name"])) {
                 move_uploaded_file($autor->img["tmp_name"], $autor->ruta_de_imagen);
             }
         }catch(Exception $e){
@@ -83,14 +83,6 @@ class AutoresModel extends DBConnectionModel{
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
-        }
-    }
-
-    public function save($autor){
-        if(isset($autor->id)){
-            $this->update($autor);
-        }else{
-            $this->create($autor);
         }
     }
 

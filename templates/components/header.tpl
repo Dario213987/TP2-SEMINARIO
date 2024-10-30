@@ -15,7 +15,7 @@
 <header>
     <nav class="navbar navbar-expand-sm bg-body-tertiary">
         <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="inicio">
+        <a class="navbar-brand d-flex align-items-center" href="{if $gestion}gestion/{/if}inicio">
             <img src="/img/logo.png" alt="Bootstrap" width="50" height="50">
             <h3>Mi biblioteca</h3>
         </a>

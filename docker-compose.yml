@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+          context: .
+          dockerfile: Dockerfile
+    user: "1000:984"
+    container_name: libreria_apache
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+    networks:
+      - libreria_apache
+  db:
+    image: mysql:8.0
+    container_name: MySQL
+    hostname: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: libreria
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      - libreria_apache
+networks:
+  libreria_apache:
+    driver: bridge

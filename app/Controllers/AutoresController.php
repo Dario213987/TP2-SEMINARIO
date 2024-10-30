@@ -10,6 +10,7 @@ class AutoresController{
     function __construct(){
         $this->model = new AutoresModel();
         $this->view = new AutoresView();
+        session_start();
     }
 
     public function index(){
@@ -58,7 +59,7 @@ class AutoresController{
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
-            header("Location: /gestion/autores/editar/".$_SESSION['id']);
+            header("Location: /gestion/autores/editar/".$_POST['id']);
         }
     }
 

@@ -27,6 +27,13 @@
   </div>
   <h3 class="py-4 ps-3 bg-light rounded">Obras</h3>
   <div class="d-flex flex-wrap align-items-center justify-content-center">
+  {if $gestion}
+    <div class="tile-libro card">
+        <a href='/gestion/libros/crear' class="text-decoration-none d-flex justify-content-center align-items-center" style="width: 18rem; height:32rem; font-size:6rem">
+            <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </div>    
+  {/if}
   {foreach from=$libros item=libro}
       {include file="components/tileLibroAnio.tpl"}
   {/foreach}

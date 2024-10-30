@@ -2,7 +2,7 @@
 {include file="components/header.tpl"}
 <div class="col-12 col-md-10 col-lg-7 col-xl-6 my-5">
     <div class="card shadow-lg rounded-4">
-        <h2 class="text-center pt-3">Nuevo autor</h2>
+        <h2 class="text-center pt-3">Editar autor</h2>
         <form id="form-editar-autor" class="p-4" method="POST" enctype="multipart/form-data" action="/gestion/autores/modificar">
             <input type="hidden" name="id" value="{$autor->id}">
             <div class="mb-3">

@@ -6,7 +6,7 @@
         <form id="form-crear-autor" class="p-4" method="POST" enctype="multipart/form-data" action="/gestion/autores/guardar">
             <div class="mb-3">
                 <label class="form-label" for="nombre">Nombre completo:</label>
-                <input type="text" class="form-control {if $errors&&!empty($errors["nombre"])}is-invalid{/if}" name="titulo" placeholder="Nombre completo del autor" value="{$oldValues['titulo']|default:''}">
+                <input type="text" class="form-control {if $errors&&!empty($errors["nombre"])}is-invalid{/if}" name="nombre" placeholder="Nombre completo del autor" value="{$oldValues['titulo']|default:''}">
                 {if $errors&&!empty($errors["nombre"])}
                     <p class="invalid-feedback">*{$errors["nombre"]}</p>    
                 {/if}
@@ -28,7 +28,7 @@
             <div class="d-flex justify-content-evenly">
                 <button class="btn btn-secondary">Cancelar</button>
                 <button type="submit" class="btn btn-primary ms-5">Guardar</button>
-            </div>T" enctype="multipart/form-data" action="/gestion/autores/guardar">
+            </div>
         </form>
     </div>
 </div>

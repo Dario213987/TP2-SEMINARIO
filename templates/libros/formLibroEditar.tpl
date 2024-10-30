@@ -2,7 +2,7 @@
 {include file="components/header.tpl"}
 <div class="col-12 col-md-10 col-lg-7 col-xl-6 my-5">
     <div class="card shadow-lg rounded-4">
-        <h2 class="text-center pt-3">Editar {$libro->titulo}</h2>
+        <h2 class="text-center pt-3">Editar libro</h2>
         <form id="form-editar-libro" class="p-4" method="POST" enctype="multipart/form-data" action="/gestion/libros/modificar">
             <input type="hidden" name="old_isbn" value="{$libro->isbn}">
             <div class="mb-3">
@@ -15,11 +15,12 @@
             <div class="mb-3">
                 <label class="form-label {if $errors&&!empty($errors["autor"])}is-invalid{/if}" for="autor">Autor:</label>
                 <select class="form-select" name="autor">
+                <option value=''>Seleccione el autor</option>
                     {foreach from=$autores item=autor}
                         <option value='{$autor->id}'
-                            {if !isset($oldValues["autor"])&&$autor->id==$libro->autor->id}
+                            {if isset($oldValues["autor"])&&$autor->id==$oldValues["autor"]}
                                 selected
-                            {elseif isset($oldValues["autor"])&&$autor->id==$oldValues["autor"]}
+                            {elseif $autor->id==$libro->autor->id}
                                 selected
                             {/if}
                         >{$autor->nombre}</option>
@@ -53,12 +54,12 @@
             <div class="mb-3">
                 <label class="form-label" for="idioma">Idioma:</label>
                 <select class="form-select {if $errors&&!empty($errors["idioma"])}is-invalid{/if}" name="idioma">
-                    <option selected value=''>Seleccione un idioma</option>
+                    <option value=''>Seleccione el idioma</option>
                     {foreach from=$idiomas item=idioma}
-                        <option value='{$idioma->id}'
+                        <option value='{$idioma->id}' 
                         {if !isset($oldValues["idioma"])&&$idioma->id==$libro->idioma->id}
                             selected
-                        {elseif $oldValues["idioma"]&&$idioma->id==$oldValues["idioma"]}
+                        {elseif isset($oldValues["idioma"])&&$idioma->id==$oldValues["idioma"]}
                             selected
                         {/if}
                         >{$idioma->nombre}</option>
@@ -96,9 +97,9 @@
             <div class="mb-3">
                 <label class="form-label" for="encuadernado">Encuadernado:</label>
                 <select class="form-control {if $errors&&!empty($errors["encuadernado"])}is-invalid{/if}" name="encuadernado">
-                    <option selected value=''>Seleccione el encuadernado</option>
-                    <option value="Tapa dura">Tapa dura</option>
-                    <option value="Tapa blanda">Tapa blanda</option>
+                    <option value=''>Seleccione el encuadernado</option>
+                    <option value="Tapa dura" {if $libro->encuadernado == "Tapa dura"}selected{/if}>Tapa dura</option>
+                    <option value="Tapa blanda" {if $libro->encuadernado == "Tapa blanda"}selected{/if}>Tapa blanda</option>
                 </select>
                 {if $errors&&!empty($errors["encuadernado"])}
                     <p class="invalid-feedback">*{$errors["encuadernado"]}</p>    

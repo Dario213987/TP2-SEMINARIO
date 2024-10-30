@@ -17,6 +17,7 @@ class LibrosController{
         $this->idiomasModel = new idiomasModel();
         $this->autoresModel = new AutoresModel();
         $this->view = new LibrosView();
+        session_start();
     }
 
     public function index(){

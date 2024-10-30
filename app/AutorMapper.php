@@ -8,18 +8,21 @@ class AutorMapper{
         }
         $autor->nombre = $values["nombre"];
         $autor->biografia = $values["biografia"];
-        //Acá me complique un poco, pero bueno, para cargar la ruta en la que estará la foto le pongo de nombre su hash, ya que no puedo usar la id para nombrarlo si no se cargó todavía.
+        /*
+            Está parte del método verifica si se cargó una imagen y si se cargó calcula el hash de la misma.
+            Con ese hash se calcula la ruta en la que se guardará la imagen en el servidor siendo esta: 
+            {ruta asignada en el archivo de connfiguración} + {hash de la imagen} + "." + {extension del archivo cargado} 
+        */
         if (isset($values['foto']) && $values['foto']['tmp_name']) {
             $fotoRutaTemporal = $values['foto']['tmp_name'];
             $archivoPortada = file_get_contents($fotoRutaTemporal);
             $hash = hash("sha256", $archivoPortada);
             $extension = pathinfo($values['foto']['name'], PATHINFO_EXTENSION);
-            //TODO: hacer que la ruta donde se guardan las imagenes sea una global configurable
-            $autor->ruta_de_imagen = "img/autores/" . $hash . "." . $extension;
+            $autor->ruta_de_imagen = AUTORES_IMAGE_ROUTE . $hash . "." . $extension;
+            $autor->img = $values['foto']; 
         } else {
             $autor->ruta_de_imagen = "";
         }
-        $autor->img = (file_exists($values['foto']['tmp_name'])) ? $values['foto'] : null; 
         return $autor;
     }
 }

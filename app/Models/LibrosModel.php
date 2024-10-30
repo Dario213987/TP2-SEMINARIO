@@ -1,5 +1,5 @@
 <?php
-require_once "app/DBConnectionModel.php";
+require_once "app/Models/DBConnectionModel.php";
 require_once "app/LibroMapper.php";
 class LibrosModel extends DBConnectionModel{
 
@@ -9,10 +9,10 @@ class LibrosModel extends DBConnectionModel{
             $connection->beginTransaction();
             $query = $connection->prepare("SELECT libros.*, autores.id AS autor_id, autores.nombre AS autor_nombre , idiomas.id AS idioma_id, idiomas.nombre AS idioma_nombre FROM libros JOIN autores ON libros.autor = autores.id JOIN idiomas ON libros.idioma = idiomas.id");
             $query->execute();
-            $connection->commit();
             $libros = $query->fetchAll(PDO::FETCH_OBJ);
+            $connection->commit();
             foreach($libros as $libro){
-            $libro = LibroMapper::model2Libro($libro);
+                $libro = LibroMapper::model2Libro($libro);
             }
             return $libros;
         }catch(Exception $e){
@@ -27,8 +27,8 @@ class LibrosModel extends DBConnectionModel{
             $connection->beginTransaction();
             $query = $connection->prepare("SELECT libros.*, autores.id AS autor_id, autores.nombre AS autor_nombre , idiomas.id AS idioma_id, idiomas.nombre AS idioma_nombre FROM libros JOIN autores ON libros.autor = autores.id JOIN idiomas ON libros.idioma = idiomas.id WHERE libros.isbn = ?");
             $query->execute([$isbn]);
-            $connection->commit();
             $libro = $query->fetch(PDO::FETCH_OBJ);
+            $connection->commit();
             return LibroMapper::model2Libro($libro);
         }catch(Exception $e){
             $connection ->rollBack();
@@ -56,10 +56,10 @@ class LibrosModel extends DBConnectionModel{
                 $libro->autor->id,
                 $libro->ruta_de_imagen
             ]);
+            $connection->commit();
             if (isset($libro->img) && is_uploaded_file($libro->img["tmp_name"])) {
                 move_uploaded_file($libro->img["tmp_name"],$libro->ruta_de_imagen);
             }
-            $connection->commit();
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
