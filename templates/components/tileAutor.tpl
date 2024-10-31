@@ -14,7 +14,7 @@
     {if $gestion}
         <div class="position-absolute top-0 end-0 m-1">
             <a href="gestion/autores/editar/{$autor->id}" class="text-center btn btn-primary rounded-circle m-1"><i class="fa-solid fa-pencil"></i></a>
-            <a href="gestion/autores/eliminar/{$autor->id}" class="text-center btn btn-danger rounded-circle m-1"><i class="fa-solid fa-trash"></i></a>
+            <button onclick="confirmarEliminacion('gestion/autores/eliminar/{$autor->id}')" class="text-center btn btn-danger rounded-circle m-1"><i class="fa-solid fa-trash"></i></button>
         </div>
     {/if}
 </div>

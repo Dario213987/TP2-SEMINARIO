@@ -16,7 +16,7 @@
     {if $gestion}
         <div class="position-absolute top-0 end-0 m-1">
             <a href="gestion/libros/editar/{$libro->isbn}"  class="text-center btn btn-primary rounded-circle me-1 mt-1"><i class="fa-solid fa-pencil"></i></a>
-            <a href="gestion/libros/eliminar/{$libro->isbn}" class="text-center btn btn-danger rounded-circle me-1 mt-1"><i class="fa-solid fa-trash"></i></a>
+            <button onclick="confirmarEliminacion('gestion/libros/eliminar/{$libro->isbn}')" class="text-center btn btn-danger rounded-circle m-1"><i class="fa-solid fa-trash"></i></button>
         </div>
     {/if}
 </div>
