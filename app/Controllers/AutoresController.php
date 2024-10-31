@@ -1,15 +1,18 @@
 <?php   
 require_once "app/Models/AutoresModel.php";
+require_once "app/Models/LibrosModel.php";
 require_once "app/Views/AutoresView.php";
 require_once "app/AutorMapper.php";
 require_once "app/Requests/CreateAutorRequest.php";
 class AutoresController{
     private $model;
+    private $librosModel;
     private $view;
 
     function __construct(){
         $this->model = new AutoresModel();
         $this->view = new AutoresView();
+        $this->librosModel = new LibrosModel();
         session_start();
     }
 
@@ -84,6 +87,10 @@ class AutoresController{
     }
 
     public function destroy($id){$this->limpiarErrores();
+        $librosDeAutor = $this->model->librosFromAutor($id);
+        foreach($librosDeAutor as $libro){
+            $this->librosModel->delete($libro->isbn);
+        }
         $this->model->delete($id);
         header("Location: /gestion/autores");
         die();
