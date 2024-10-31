@@ -72,7 +72,7 @@ class AutoresModel extends DBConnectionModel{
             $query = $connection->prepare("UPDATE autores SET nombre=?, biografia=?, ruta_de_imagen=? WHERE id = ?");
             $query->execute([$autor->nombre, $autor->biografia, $autor->ruta_de_imagen, $autor->id]);
             $connection->commit();
-            if ($autor->ruta_de_imagen && $autor->ruta_de_imagen != $autorOld->ruta_de_imagen) {
+            if ($autorOld && $autor->ruta_de_imagen && $autor->ruta_de_imagen != $autorOld->ruta_de_imagen) {
                 if (file_exists($autorOld->ruta_de_imagen)) {
                     unlink($autorOld->ruta_de_imagen);
                 }
@@ -94,7 +94,7 @@ class AutoresModel extends DBConnectionModel{
             $query = $connection->prepare("DELETE FROM autores WHERE id = ?");
             $query->execute([$id]);
             $connection->commit();
-            if($autorOld->ruta_de_imagen){
+            if($autorOld && $autorOld->ruta_de_imagen && file_exists($autorOld->ruta_de_imagen)){
                 unlink($autorOld->ruta_de_imagen);
             }
         }catch(Exception $e){

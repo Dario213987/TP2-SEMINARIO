@@ -33,18 +33,18 @@ class LibroMapper{
         $idioma = new stdClass();
         $idioma->id = $values["idioma"];
         $libro->idioma = $idioma;
-        $libro->old_isbn = $values["old_isbn"];
+        $libro->old_isbn = $values["old_isbn"] ?? "";
         /*
             Está parte del método verifica si se cargó una imagen y si se cargó calcula el hash de la misma.
             Con ese hash se calcula la ruta en la que se guardará la imagen en el servidor siendo esta: 
-            {ruta asignada en el archivo de connfiguración} + {hash de la imagen} + "." + {extension del archivo cargado} 
+            {ruta asignada en el archivo de connfiguración} + {hash de la imagen} + (Fecha de carga) + "." + {extension del archivo cargado} 
         */
         if (isset($values['portada']) && $values['portada']['tmp_name']) {
             $portadaRutaTemporal = $values['portada']['tmp_name'];
             $archivoPortada = file_get_contents($portadaRutaTemporal);
             $hash = hash("sha256", $archivoPortada);
             $extension = pathinfo($values['portada']['name'], PATHINFO_EXTENSION);
-            $libro->ruta_de_imagen = LIBROS_IMAGE_ROUTE . $hash . "." . $extension;
+            $libro->ruta_de_imagen = LIBROS_IMAGE_ROUTE . $hash . date("Y-m-d_H:i:s") ."." . $extension;
             $libro->img = $values['portada']; 
         } else {
             $libro->ruta_de_imagen = "";

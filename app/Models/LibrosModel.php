@@ -11,8 +11,10 @@ class LibrosModel extends DBConnectionModel{
             $query->execute();
             $libros = $query->fetchAll(PDO::FETCH_OBJ);
             $connection->commit();
-            foreach($libros as $libro){
-                $libro = LibroMapper::model2Libro($libro);
+            if($libros){
+                foreach($libros as $libro){
+                    $libro = LibroMapper::model2Libro($libro);
+                }
             }
             return $libros;
         }catch(Exception $e){
@@ -29,7 +31,10 @@ class LibrosModel extends DBConnectionModel{
             $query->execute([$isbn]);
             $libro = $query->fetch(PDO::FETCH_OBJ);
             $connection->commit();
-            return LibroMapper::model2Libro($libro);
+            if($libro){
+                $libro = LibroMapper::model2Libro($libro);
+            }
+            return $libro;
         }catch(Exception $e){
             $connection ->rollBack();
             error_log($e ->getMessage());
@@ -112,7 +117,7 @@ class LibrosModel extends DBConnectionModel{
             $query = $connection->prepare("DELETE FROM libros WHERE isbn = ?");
             $query->execute([$isbn]);
             $connection->commit();
-            if($libroOld->ruta_de_imagen && file_exists($libroOld->ruta_de_imagen)){
+            if($libroOld && $libroOld->ruta_de_imagen && file_exists($libroOld->ruta_de_imagen)){
                 unlink($libroOld->ruta_de_imagen);
             }
         }catch(Exception $e){

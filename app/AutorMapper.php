@@ -18,7 +18,7 @@ class AutorMapper{
             $archivoPortada = file_get_contents($fotoRutaTemporal);
             $hash = hash("sha256", $archivoPortada);
             $extension = pathinfo($values['foto']['name'], PATHINFO_EXTENSION);
-            $autor->ruta_de_imagen = AUTORES_IMAGE_ROUTE . $hash . "." . $extension;
+            $autor->ruta_de_imagen = AUTORES_IMAGE_ROUTE . $hash . date("Y-m-d_H:i:s") . "." . $extension;
             $autor->img = $values['foto']; 
         } else {
             $autor->ruta_de_imagen = "";

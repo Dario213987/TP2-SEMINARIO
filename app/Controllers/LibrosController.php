@@ -27,17 +27,27 @@ class LibrosController{
 
     public function show($id){
         $this->limpiarErrores();
-        $this->view->show($this->model->find($id), $this->isGestion());
+        $libro = $this->model->find($id);
+        if($libro){
+            $this->view->show($libro, $this->isGestion());
+        }else{
+            if($this->isGestion()){
+                header("Location: /gestion/libros");
+                die();
+            }
+            header("Location: /libros");
+            die();
+        }
     }
 
     public function create(){
         $errors = $_SESSION["errors"] ?? [];  
-        $oldValues = $_SESSION["old_values"] ?? [];  
+        $oldValues = $_SESSION["old_values"] ?? [];
         $this->view->create($this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues, $this->isGestion());
     }
 
     public function store(){
-        unset($_SESSION["old_values"],$_SESSION["errors"]);
+        $this->limpiarErrores();
         $requestHandler = new CreateLibroRequest([
             'titulo',                
             'autor',                 
@@ -56,22 +66,34 @@ class LibrosController{
             $libro = LibroMapper::request2Libro($requestHandler);
             $this->model->create($libro);
             header("Location: /gestion/libros");
+            die();
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
             header("Location: /gestion/libros/crear");
+            die();
         }
 
     }
 
     public function edit($id){
         $errors = $_SESSION["errors"] ?? [];  
-        $oldValues = $_SESSION["old_values"] ?? [];  
-        $this->view->edit($this->model->find($id) ,$this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues, $this->isGestion());
+        $oldValues = $_SESSION["old_values"] ?? [];
+        $libro = $this->model->find($id);
+        if($libro){
+            $this->view->edit($libro,$this->autoresModel->all(), $this->idiomasModel->all(), $errors, $oldValues, $this->isGestion());
+        }else{
+            if($this->isGestion()){
+                header("Location: /gestion/libros");
+                die();
+            }
+            header("Location: /libros");
+            die();
+        }
     }
 
     public function update(){
-        unset($_SESSION["old_values"],$_SESSION["errors"]);
+        $this->limpiarErrores();
         $requestHandler = new CreateLibroRequest([
             'titulo',                
             'autor',                 
@@ -91,16 +113,19 @@ class LibrosController{
             $libro = LibroMapper::request2Libro($requestHandler);
             $this->model->update($libro);
             header("Location: /gestion/libros");
+            die();
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
             header("Location: /gestion/libros/editar/".$_POST["old_isbn"]);
+            die();
         }
     }
 
     public function destroy($id){
         $this->model->delete($id);
         header("Location: /gestion/libros");
+        die();
     }
 
     private function isGestion(){
@@ -108,8 +133,7 @@ class LibrosController{
     }
 
     private function limpiarErrores(){
-        $_SESSION["old_values"] = [];
-        $_SESSION["errors"] = [];
+        unset($_SESSION["old_values"],$_SESSION["errors"]);
     }
 }
 ?>

@@ -20,7 +20,17 @@ class AutoresController{
 
     public function show($id){
         $this->limpiarErrores();
-       $this->view->show($this->model->find($id), $this->model->librosFromAutor($id), $this->isGestion());
+        $autor = $this->model->find($id);
+        if($autor){
+            $this->view->show($autor, $this->model->librosFromAutor($id), $this->isGestion());
+        }else{
+            if($this->isGestion()){
+                header("Location: /gestion/autores");
+                die();
+            }
+            header("Location: /autores");
+            die();
+        }
     }
 
     public function create(){
@@ -36,17 +46,25 @@ class AutoresController{
             $autor = AutorMapper::request2Autor($requestHandler);
             $this->model->create($autor);
             header("Location: /gestion/autores");
+            die();
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
             header("Location: /gestion/autores/crear");
+            die();
         }
     }
 
     public function edit($id){
         $errors = $_SESSION["errors"] ?? [];  
-        $oldValues = $_SESSION["old_values"] ?? [];  
-        $this->view->edit($this->model->find($id), $errors, $oldValues, $this->isGestion());
+        $oldValues = $_SESSION["old_values"] ?? [];
+        $autor = $this->model->find($id);
+        if($autor){
+            $this->view->edit($autor, $errors, $oldValues, $this->isGestion());
+        }else{
+            header("Location: /gestion/autores");
+            die();
+        } 
     }
 
     public function update(){
@@ -56,16 +74,19 @@ class AutoresController{
             $autor = AutorMapper::request2Autor($requestHandler);
             $this->model->update($autor);
             header("Location: /gestion/autores");
+            die();
         }else{
             $_SESSION["old_values"] = $requestHandler->all();
             $_SESSION["errors"] = $requestHandler->getErrorMessages();
             header("Location: /gestion/autores/editar/".$_POST['id']);
+            die();
         }
     }
 
     public function destroy($id){$this->limpiarErrores();
         $this->model->delete($id);
         header("Location: /gestion/autores");
+        die();
     }
 
 
